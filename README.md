@@ -11,16 +11,23 @@ You can use KCLogger as a `<script>` tag from a [CDN](https://raw.githubusercont
 ## Example Usage
 ```js
 
+// The options object is super simple, you can take a look at it by checking
+// the require(`kclogger`).settings file
 const kOptions = {
+    // Yeah, you can change the icons or turn them off completely
     icons: {
         log: `🦝`
     },
-    timestamps: true,
-    datestamps: true,
-    spaced: true
+    timestamps: true, // If the time should be shown
+    datestamps: true, // If the date should be shown
+    spaced: true, // If there should be a '\n' after each line of logging
+    // This will write a log to the file mentioned down here, you can simply use time() if you would like to make different files
+    fileLog: {
+        path: `./fileLog.json` // For now, it only logs in json
+    }
 };
 
-const k = require(`kclogger`)(kOptions);
+const k = require(`kclogger`).init(kOptions);
 
 k.log(`Hey, it's all working just fine!`); // [🦝][23/06/2020 13:16:23]: Hey, it's all working just fine!
 k.warn(`And it's looking really good!`); // [🟡][23/06/2020 13:16:23]: Hey, it's all working just fine!
