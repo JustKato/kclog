@@ -78,10 +78,11 @@
 
             // #region Colors
                 color = (!!MainLogger.settings.colorful ) ? color.join("") : ``;
+                let resetColor = (!!MainLogger.settings.colorful ) ? module.exports.colors.Reset : "";
             // #endregion
 
             // #region Stdout
-                console.log(`[${icon}][${datestamp}${timestamp}]: ${color}${message}${spaced}${module.exports.colors.Reset}`, ...args);
+                console.log(`[${icon}][${datestamp}${timestamp}]: ${color}${message}${spaced}${resetColor}`, ...args);
             // #endregion
         },
 
