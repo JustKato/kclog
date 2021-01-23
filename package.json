@@ -1,5 +1,5 @@
 {
-  "name": "kclog",
+  "name": "kclogger",
   "version": "1.0.0",
   "description": "A simple colourful logger with a lot of options, super light-weight and doesn't depend on anything. Super useful as a drop-in replacement to all your console.logs",
   "main": "logger.js",
