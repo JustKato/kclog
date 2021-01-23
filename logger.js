@@ -86,7 +86,7 @@
         },
 
         info : (message, ...args) => {
-            MainLogger.doLog("" + message, `info`, [module.exports.colors.Bright, module.exports.colors.FgCyan], ...args);
+            MainLogger.doLog(" " + message, `info`, [module.exports.colors.Bright, module.exports.colors.FgCyan], ...args);
         },
 
         log  : (message, ...args) => {
@@ -94,7 +94,7 @@
         },
 
         warn : (message, ...args) => {
-            MainLogger.doLog("" + message, `warn`, [module.exports.colors.Bright, module.exports.colors.FgYellow], ...args);
+            MainLogger.doLog(" " + message, `warn`, [module.exports.colors.Bright, module.exports.colors.FgYellow], ...args);
         },
 
         err  : (message, ...args) => {
