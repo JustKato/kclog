@@ -8,6 +8,21 @@
 
 You can use KCLogger as a `<script>` tag from a [CDN](https://raw.githubusercontent.com/JustKato/kclog/master/logger.js), or as a `kclogger` package on [npm](https://www.npmjs.com/package/kclogger).
 
+## RoadMap
+```yml
+Messages:
+    - ✅ info
+    - ✅ log
+    - ✅ warn
+    - ✅ error
+Options:
+    - ✅ Icons
+    - ✅ Colours
+    - ⏲ Save to file
+    - 💀 Discord bot messages
+    - 💀 Telegram bot messages
+```
+
 ## Example Usage
 ```js
 
