@@ -1,0 +1,24 @@
+{
+  "name": "kclog",
+  "version": "1.0.0",
+  "description": "A simple colourful logger with a lot of options, super light-weight and doesn't depend on anything. Super useful as a drop-in replacement to all your console.logs",
+  "main": "logger.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JustKato/kclog.git"
+  },
+  "keywords": [
+    "log",
+    "logging",
+    "logger"
+  ],
+  "author": "Kato Twofold",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JustKato/kclog/issues"
+  },
+  "homepage": "https://github.com/JustKato/kclog#readme"
+}
