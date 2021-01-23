@@ -35,4 +35,4 @@ k.err(`Even showing errors`, {message: `Some ugly error`, data: [{}, {}]); // [ð
 
 ```
 
-![Example Picture][https://raw.githubusercontent.com/JustKato/kclog/master/preview.png]
+![Example Picture](https://raw.githubusercontent.com/JustKato/kclog/master/preview.png)
