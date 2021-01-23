@@ -50,7 +50,7 @@
          * @param {String} type The type of message to send
          * @param {Array} color A list of colors to prepend to the log
          */
-        doLog: (message = ``, type = 'info', color = [module.exports.colors.Reset], ...args) => {
+        doLog: (message = ``, type = 'info', color = [module.exports.colorss.Reset], ...args) => {
 
             // #region Icon
                 let icon = MainLogger.settings.icons[type] || `💨`;
@@ -61,13 +61,13 @@
                 // #region TimeStamp
                     let timestamp = ``;
                     if ( !!MainLogger.settings.timestamps ) {
-                        timestamp = parseTime(now) + " ";
+                        timestamp = parseTime(now);
                     }
                 // #endregion
                 // #region DateStamp
                     let datestamp = ``;
                     if ( !!MainLogger.settings.datestamps ) {
-                        datestamp = parseDate(now);
+                        datestamp = parseDate(now) + " ";
                     }
                 // #endregion
             // #endregion
@@ -77,28 +77,28 @@
             // #endregion
 
             // #region Colors
-                let color = (!!MainLogger.settings.colorful ) ? color.join("") : ``;
+                color = (!!MainLogger.settings.colorful ) ? color.join("") : ``;
             // #endregion
 
             // #region Stdout
-                console.log(`[${icon}][${datestamp}${timestamp}]: ${color}${message}${spaced}${module.exports.color.Reset}`, ...args);
+                console.log(`[${icon}][${datestamp}${timestamp}]: ${color}${message}${spaced}${module.exports.colors.Reset}`, ...args);
             // #endregion
         },
 
         info : (message, ...args) => {
-            MainLogger.doLog(message, `info`, [module.exports.color.Bright, module.exports.color.FgCyan],   ...args);
+            MainLogger.doLog(message, `info`, [module.exports.colors.Bright, module.exports.colors.FgCyan], ...args);
         },
 
         log  : (message, ...args) => {
-            MainLogger.doLog(message, `log`,  [module.exports.color.Bright, module.exports.color.FgWhite],  ...args);
+            MainLogger.doLog(message, `log`,  [module.exports.colors.Bright, module.exports.colors.FgWhite], ...args);
         },
 
         warn : (message, ...args) => {
-            MainLogger.doLog(message, `warn`, [module.exports.color.Bright, module.exports.color.FgYellow], ...args);
+            MainLogger.doLog(message, `warn`, [module.exports.colors.Bright, module.exports.colors.FgYellow], ...args);
         },
 
         err  : (message, ...args) => {
-            MainLogger.doLog(message, `err`,  [module.exports.color.Bright, module.exports.color.FgRed],    ...args);
+            MainLogger.doLog(message, `err`,  [module.exports.colors.Bright, module.exports.colors.FgRed], ...args);
         },
 
 
