@@ -21,6 +21,7 @@ Options:
     - ✅ Save to file
     - ⏲ Discord bot messages
     - 💀 Telegram bot messages
+    - 💀 Colours for the Browser
 ```
 
 ## Example Usage
