@@ -1,5 +1,10 @@
 "use strict";
 
+const fs   = require(`fs`);
+const path = require(`path`);
+
+const logfile_prefix = process.pid;
+
 // #region Helpers
     /**
      * Helps to parse the respective date to a correct format
@@ -44,6 +49,12 @@
      * This is the actual logger, the module.exports simply handles the settings
      */
     const MainLogger = {
+
+        /**
+         * The full log, all of the messages are stored in here, so that it's easier to store to file.
+         */
+        FULL_LOG: [],
+
         /**
          * 
          * @param {String} message The message to print out in the CLI
@@ -51,55 +62,84 @@
          * @param {Array} color A list of colors to prepend to the log
          */
         doLog: (message = ``, type = 'info', color = [module.exports.colorss.Reset], ...args) => {
+            return new Promise( async (_r, _e) => {
+                // #region Icon
+                    let icon = MainLogger.settings.icons[type] || `💨`;
+                // #endregion
+    
+                // #region Time
+                    const now = new Date();
+                    // #region TimeStamp
+                        let timestamp = ``;
+                        if ( !!MainLogger.settings.timestamps ) {
+                            timestamp = parseTime(now);
+                        }
+                    // #endregion
+                    // #region DateStamp
+                        let datestamp = ``;
+                        if ( !!MainLogger.settings.datestamps ) {
+                            datestamp = parseDate(now) + " ";
+                        }
+                    // #endregion
+                // #endregion
+    
+                // #region Spaced
+                    let spaced = (!!MainLogger.settings.spaced) ? `\n` : ``;
+                // #endregion
+    
+                // #region Colors
+                    color = (!!MainLogger.settings.colorful ) ? color.join("") : ``;
+                    let resetColor = (!!MainLogger.settings.colorful ) ? module.exports.colors.Reset : "";
+                // #endregion
+    
+                // #region Stdout
+                    console.log(`[${icon}][${datestamp}${timestamp}]:${color}${message}${spaced}${resetColor}`, ...args);
+                    // Add the message to the full log
+                    MainLogger.FULL_LOG.push({
+                        timestamp: `${parseDate(now)} ${parseTime(now)}`,
+                        message:   `[${icon}][${datestamp}${timestamp}]: ${message}${spaced}`,
+                        args:       [...args]
+                    })
+                // #endregion
 
-            // #region Icon
-                let icon = MainLogger.settings.icons[type] || `💨`;
-            // #endregion
+                // This keeps track if we're logging to a file, so that the promise can make sense.
+                let isLoggingToFile = false;
 
-            // #region Time
-                const now = new Date();
-                // #region TimeStamp
-                    let timestamp = ``;
-                    if ( !!MainLogger.settings.timestamps ) {
-                        timestamp = parseTime(now);
+                // #region Log To File
+                    if ( !!MainLogger.settings.fileLog ) {
+                        // Make sure it's a string
+                        if ( (typeof MainLogger.settings.fileLog).toLowerCase() === "string" ) {
+                            // Mark the isLoggingToFile to true, so that it won't resolve before we finish
+                            isLoggingToFile = true;
+                            // Resolve the absolute path of the filelog
+                            let logPath = path.resolve( logfile_prefix + "_" + path.basename(MainLogger.settings.fileLog))
+
+                            fs.writeFileSync(logPath, JSON.stringify(MainLogger.FULL_LOG, null, 2));
+
+                            _r();
+                        }
                     }
                 // #endregion
-                // #region DateStamp
-                    let datestamp = ``;
-                    if ( !!MainLogger.settings.datestamps ) {
-                        datestamp = parseDate(now) + " ";
-                    }
-                // #endregion
-            // #endregion
 
-            // #region Spaced
-                let spaced = (!!MainLogger.settings.spaced) ? `\n` : ``;
-            // #endregion
-
-            // #region Colors
-                color = (!!MainLogger.settings.colorful ) ? color.join("") : ``;
-                let resetColor = (!!MainLogger.settings.colorful ) ? module.exports.colors.Reset : "";
-            // #endregion
-
-            // #region Stdout
-                console.log(`[${icon}][${datestamp}${timestamp}]: ${color}${message}${spaced}${resetColor}`, ...args);
-            // #endregion
+                // If we're not logging to a file, just resolve the promise right away.
+                if ( !isLoggingToFile ) { _r(); }
+            })
         },
 
         info : (message, ...args) => {
-            MainLogger.doLog(" " + message, `info`, [module.exports.colors.Bright, module.exports.colors.FgCyan], ...args);
+            return MainLogger.doLog(" " + message, `info`, [module.exports.colors.Bright, module.exports.colors.FgCyan], ...args);
         },
 
         log  : (message, ...args) => {
-            MainLogger.doLog(message, `log`,  [module.exports.colors.Bright, module.exports.colors.FgWhite], ...args);
+            return MainLogger.doLog(message, `log`,  [module.exports.colors.Bright, module.exports.colors.FgWhite], ...args);
         },
 
         warn : (message, ...args) => {
-            MainLogger.doLog(" " + message, `warn`, [module.exports.colors.Bright, module.exports.colors.FgYellow], ...args);
+            return MainLogger.doLog(" " + message, `warn`, [module.exports.colors.Bright, module.exports.colors.FgYellow], ...args);
         },
 
         err  : (message, ...args) => {
-            MainLogger.doLog(message, `err`,  [module.exports.colors.Bright, module.exports.colors.FgRed], ...args);
+            return MainLogger.doLog(message, `err`,  [module.exports.colors.Bright, module.exports.colors.FgRed], ...args);
         },
 
 

@@ -5,7 +5,7 @@ const settings = {
         warn: `😫`,
         err:  `🥵`,
     },
-    spaced: false
+    spaced: false,
 };
 
 

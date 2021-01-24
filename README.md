@@ -18,8 +18,8 @@ Messages:
 Options:
     - ✅ Icons
     - ✅ Colours
-    - ⏲ Save to file
-    - 💀 Discord bot messages
+    - ✅ Save to file
+    - ⏲ Discord bot messages
     - 💀 Telegram bot messages
 ```
 
